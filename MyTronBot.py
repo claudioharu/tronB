@@ -8,6 +8,7 @@
 import tron
 
 import random
+from example_grid import *
 
 def flood_fill(board, startpos):
 	expand = [startpos]
@@ -19,23 +20,66 @@ def flood_fill(board, startpos):
 			dest = board.rel(dir, pos)
 			if board.passable(dest) and dest not in done and dest not in expand:
 				expand.append(dest)
-	# print sorted(done)
-	# return len(done)
+
 	return sorted(done)
 
-def which_move(board):
+def Frame():
+	mapFrame = []
+	# print sorted(mapFrame)
+	for i in range (0,15):
+		mapFrame.append([0,i])
 
-    # fill in your code here. it must return one of the following directions:
-    #   tron.NORTH, tron.EAST, tron.SOUTH, tron.WEST
+	for i in range (0, 15):
+		mapFrame.append([15-1, i])
 
-    # For now, choose a legal move randomly.
-    # Note that board.moves will produce [NORTH] if there are no
-    # legal moves available.
-    x = 7
-    y = 1
-    value = flood_fill(board,  (x,y))
-    print value
+	for i in range (1, 15-1):
+		mapFrame.append([i,0])
 
+	for i in range (1, 15-1):
+		mapFrame.append([i,15-1])
+
+	return mapFrame
+
+def which_move(board, path):
+	# check walls
+    # value = flood_fill(board,  board.me())
+    # print value
+
+	
+
+
+	# print sorted(mapFrame)
+
+	
+	# if path is None:
+	#     return random.choice(board.moves())
+	# else:
+	# print "Path found:", path
+	value = path[1].x, path[1].y
+	path.pop(0)
+	
+	if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == 1: 
+		return tron.EAST
+	if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == -1:
+		return tron.WEST
+	if (value[0] - board.me()[0]) == 1 and (value[1] - board.me()[1]) == 0:
+		return tron.SOUTH
+	if (value[0] - board.me()[0]) == -1 and (value[1] - board.me()[1]) == 0:
+		return tron.NORTH
+	# if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == 0:
+	# 	return random.choice(board.moves())
+
+
+graph, nodes = make_graph({"width": 15, "height": 15, "obstacle": Frame()})
+# print graph
+paths = None
+paths = AStarGrid(graph)
+start, end = nodes[1][1], nodes[13][13]
+path = paths.search(start, end)
+# print path
 # you do not need to modify this part
+
 for board in tron.Board.generate():
-    tron.move(which_move(board))
+    tron.move(which_move(board, path))
+
+

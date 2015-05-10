@@ -12,23 +12,27 @@ def make_graph(mapinfo):
             if not (0 <= x + i < mapinfo['width']): continue
             if not (0 <= y + j < mapinfo['height']): continue
             if [x+i,y+j] in mapinfo['obstacle']: continue
-            # if(i == -1 and j == -1 or i == -1 and j == 1 or i == 1 and j == -1 or i == 1 and j == 1 ): continue # olhar
-            if(i == -1 and j == -1): continue
-            if(i == -1 and j == 1): continue
-            if(i == 1 and j == -1): continue
-            if(i == 1 and j == 1): continue
+            if(i == -1 and j == -1 or i == -1 and j == 1 or i == 1 and j == -1 or i == 1 and j == 1 ): continue # olhar
+            # if(i == -1 and j == -1): continue
+            # if(i == -1 and j == 1): continue
+            # if(i == 1 and j == -1): continue
+            # if(i == 1 and j == 1): continue
 
 
             graph[nodes[x][y]].append(nodes[x+i][y+j])
 
     return graph, nodes
- 
-graph, nodes = make_graph({"width": 8, "height": 8, "obstacle": [[2,5],[3,5],[4,5],[5,5]]})
-print graph
-paths = AStarGrid(graph)
-start, end = nodes[1][1], nodes[5][7]
-path = paths.search(start, end)
-if path is None:
-    print "No path found"
-else:
-    print "Path found:", path
+
+# graph, nodes = make_graph({"width": 8, "height": 8, "obstacle": [[2,5],[3,5],[4,5],[5,5]]})
+# # print graph
+# paths = AStarGrid(graph)
+# start, end = nodes[1][1], nodes[5][7]
+# path = paths.search(start, end)
+# if path is None:
+#     print "No path found"
+# else:
+#     # print "Path found:", path
+#     value = path[0].x, path[0].y
+#     print value
+#     print path[0]
+#     print path

@@ -50,19 +50,15 @@ def Obstacles(board):
 					obs.append([x, y])
 	return obs
 
-
 def which_move(board):
 	# check walls
     # value = flood_fill(board,  board.me())
     # print value
 
-	
-
-
 	# print sorted(mapFrame)
 
 
-	graph, nodes = make_graph({"width": board.width, "height": board.height, "obstacle": Frame(board)})
+	graph, nodes = make_graph({"width": board.width, "height": board.height, "obstacle": Obstacles(board)})
 	# print graph
 	paths = None
 	paths = AStarGrid(graph)
@@ -79,11 +75,12 @@ def which_move(board):
 		path.pop(0)
 		
 		if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == 1:
-			
 			if not board.passable(value):
+				pos = flood_fill(board, board.me())
+				print pos
 				return random.choice(board.moves())
-
-			return tron.EAST
+			else:
+				return tron.EAST
 		if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == -1:
 			if not board.passable(value):
 				return random.choice(board.moves())
@@ -104,3 +101,5 @@ def which_move(board):
 
 for board in tron.Board.generate():
     tron.move(which_move(board))
+
+

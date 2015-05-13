@@ -108,7 +108,12 @@ def which_move(board):
 							return tron.SOUTH 
 						else: return random.choice(board.moves())
 
-					
+				# lateral colision
+				elif board.rel (tron.SOUTH, board.them()) == value or board.rel (tron.NORTH, board.them()) == value:
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.EAST)
+					return random.choice(moves)
 				else:
 					return tron.EAST
 
@@ -129,7 +134,15 @@ def which_move(board):
 					else : 
 						if board.passable(board.rel(tron.SOUTH, board.me())):
 							return tron.SOUTH 
-						else: return random.choice(board.moves())
+						else: 
+							return random.choice(board.moves())
+				# lateral colision
+				elif board.rel (tron.SOUTH, board.them()) == value or board.rel (tron.NORTH, board.them()) == value:
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.WEST)
+					return random.choice(moves)
+
 				else:
 					return tron.WEST
 	
@@ -151,6 +164,13 @@ def which_move(board):
 						if board.passable(board.rel(tron.EAST, board.me())):
 							return tron.EAST 
 						else: return random.choice(board.moves())
+
+				# lateral colision
+				elif board.rel (tron.WEST, board.them()) == value or board.rel (tron.EAST, board.them()) == value:
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.SOUTH)
+					return random.choice(moves)
 
 				else :
 					return tron.SOUTH
@@ -175,7 +195,7 @@ def which_move(board):
 						else: 
 							return random.choice(board.moves())
 
-			
+				# lateral colision
 				elif board.rel (tron.WEST, board.them()) == value or board.rel (tron.EAST, board.them()) == value:
 					moves = board.moves()
 					if len(moves) > 1:

@@ -118,8 +118,8 @@ def which_move(board):
 			else:
 				dest = board.rel(tron.EAST, board.them())
 				if dest == value:
-					room1 = len(new_flood_fill(board, board.rel(tron.NORTH, board.me()), board.rel(tron.EAST, board.me())))
-					room2 = len(new_flood_fill(board, board.rel(tron.SOUTH, board.me()), board.rel(tron.EAST, board.me())))
+					room1 = len(new_flood_fill(board, board.rel(tron.NORTH, board.me()), board.rel(tron.WEST, board.me())))
+					room2 = len(new_flood_fill(board, board.rel(tron.SOUTH, board.me()), board.rel(tron.WEST, board.me())))
 					
 					if room1 > room2:
 						if board.passable( board.rel(tron.NORTH, board.me())):
@@ -139,8 +139,8 @@ def which_move(board):
 			else:
 				dest = board.rel(tron.NORTH, board.them())
 				if dest == value:
-					room1 = len(new_flood_fill(board, board.rel(tron.WEST, board.me()), board.rel(tron.EAST, board.me())))
-					room2 = len(new_flood_fill(board, board.rel(tron.EAST, board.me()), board.rel(tron.EAST, board.me())))
+					room1 = len(new_flood_fill(board, board.rel(tron.WEST, board.me()), board.rel(tron.SOUTH, board.me())))
+					room2 = len(new_flood_fill(board, board.rel(tron.EAST, board.me()), board.rel(tron.SOUTH, board.me())))
 					
 					if room1 > room2:
 						if board.passable( board.rel(tron.WEST, board.me())):
@@ -161,8 +161,8 @@ def which_move(board):
 			else:
 				dest = board.rel(tron.SOUTH, board.them())
 				if dest == value:
-					room1 = len(new_flood_fill(board, board.rel(tron.WEST, board.me()), board.rel(tron.EAST, board.me())))
-					room2 = len(new_flood_fill(board, board.rel(tron.EAST, board.me()), board.rel(tron.EAST, board.me())))
+					room1 = len(new_flood_fill(board, board.rel(tron.WEST, board.me()), board.rel(tron.NORTH, board.me())))
+					room2 = len(new_flood_fill(board, board.rel(tron.EAST, board.me()), board.rel(tron.NORTH, board.me())))
 					
 					if room1 > room2:
 						if board.passable( board.rel(tron.WEST, board.me())):
@@ -172,7 +172,16 @@ def which_move(board):
 					else : 
 						if board.passable(board.rel(tron.EAST, board.me())):
 							return tron.EAST 
-						else: return random.choice(board.moves())
+						else: 
+							return random.choice(board.moves())
+
+			
+				elif board.rel (tron.WEST, board.them()) == value or board.rel (tron.EAST, board.them()) == value:
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.NORTH)
+					return random.choice(moves)
+
 				else:
 					return tron.NORTH
 		# if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == 0:

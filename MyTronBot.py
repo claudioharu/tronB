@@ -21,34 +21,9 @@ def flood_fill(board, startpos):
 			if board.passable(dest) and dest not in done and dest not in expand:
 				expand.append(dest)
 
-	return len(done)
-
-def escape(board, removedDirection):
-    bestcount = -1
-    bestmove = tron.NORTH
-    moves = board.moves()
-    moves.remove(removedDirection)
-
-    for dir in moves:
-
-        dest = board.rel(dir)
-        count = 0
-
-        for pos in board.adjacent(dest):
-        	
-            count = flood_fill(board, pos)
-            # print count
-
-        if count > bestcount:
-    	    # print "bestcount: " + str(bestcount)
-            bestcount = count
-            bestmove = dir
-            # print "bestmovie: " + str(bestmove)
-
-    return bestmove
+	return sorted(done)
 
 def new_flood_fill(board, startpos, obst):
-	
 	expand = [startpos]
 	done = []
 	while len(expand) is not 0:
@@ -62,7 +37,7 @@ def new_flood_fill(board, startpos, obst):
 	return sorted(done)
 
 
-def obstacles(board):
+def Obstacles(board):
 	obs = []
 	for x in range(0, board.width):
 		for y in range (0, board.height):
@@ -98,7 +73,7 @@ def wallBot(board):
 
 def which_move(board):
 
-	graph, nodes = make_graph({"width": board.width, "height": board.height, "obstacle": obstacles(board)})
+	graph, nodes = make_graph({"width": board.width, "height": board.height, "obstacle": Obstacles(board)})
 	# print graph
 	paths = None
 	paths = AStarGrid(graph)
@@ -113,9 +88,6 @@ def which_move(board):
 		# print "Path found:", path
 		value = path[1].x, path[1].y
 		path.pop(0)
-
-		moves = board.moves()
-
 		
 		if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == 1:
 			if not board.passable(value):
@@ -123,122 +95,113 @@ def which_move(board):
 			else:
 				dest = board.rel(tron.WEST, board.them())
 				if dest == value:
-
-					if len(moves) > 1: moves.remove(tron.EAST)
-
 					room1 = len(new_flood_fill(board, board.rel(tron.NORTH, board.me()), board.rel(tron.EAST, board.me())))
 					room2 = len(new_flood_fill(board, board.rel(tron.SOUTH, board.me()), board.rel(tron.EAST, board.me())))
 					
 					if room1 > room2:
 						if board.passable( board.rel(tron.NORTH, board.me())):
 							return tron.NORTH
-						else: 
-							return random.choice(moves)
+						else: return random.choice(board.moves())
 
 					else : 
 						if board.passable(board.rel(tron.SOUTH, board.me())):
 							return tron.SOUTH 
-						else: 
-							return random.choice(moves)
+						else: return random.choice(board.moves())
 
 				# lateral colision
 				elif board.rel (tron.SOUTH, board.them()) == value or board.rel (tron.NORTH, board.them()) == value:
-					
-					return escape(board, tron.EAST)
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.EAST)
+					return random.choice(moves)
 				else:
 					return tron.EAST
 
 		if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == -1:
-
 			if not board.passable(value):
 				return random.choice(board.moves())
 			else:
 				dest = board.rel(tron.EAST, board.them())
 				if dest == value:
-					
-					if len(moves) > 1: moves.remove(tron.WEST)
-
 					room1 = len(new_flood_fill(board, board.rel(tron.NORTH, board.me()), board.rel(tron.WEST, board.me())))
 					room2 = len(new_flood_fill(board, board.rel(tron.SOUTH, board.me()), board.rel(tron.WEST, board.me())))
 					
 					if room1 > room2:
 						if board.passable( board.rel(tron.NORTH, board.me())):
 							return tron.NORTH
-						else: return random.choice(moves)
+						else: return random.choice(board.moves())
 
 					else : 
 						if board.passable(board.rel(tron.SOUTH, board.me())):
 							return tron.SOUTH 
-						else: return random.choice(moves)
+						else: 
+							return random.choice(board.moves())
 				# lateral colision
 				elif board.rel (tron.SOUTH, board.them()) == value or board.rel (tron.NORTH, board.them()) == value:
-					return escape(board, tron.WEST)
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.WEST)
+					return random.choice(moves)
 
-				else: return tron.WEST
+				else:
+					return tron.WEST
 	
 		if (value[0] - board.me()[0]) == 1 and (value[1] - board.me()[1]) == 0:
-
 			if not board.passable(value):
 				return random.choice(board.moves())
 			else:
 				dest = board.rel(tron.NORTH, board.them())
 				if dest == value:
-
-					if len(moves) > 1: moves.remove(tron.SOUTH)
-
 					room1 = len(new_flood_fill(board, board.rel(tron.WEST, board.me()), board.rel(tron.SOUTH, board.me())))
 					room2 = len(new_flood_fill(board, board.rel(tron.EAST, board.me()), board.rel(tron.SOUTH, board.me())))
 					
 					if room1 > room2:
 						if board.passable( board.rel(tron.WEST, board.me())):
 							return tron.WEST
-						else:
-							
-							return random.choice(moves)
+						else: return random.choice(board.moves())
 
 					else : 
 						if board.passable(board.rel(tron.EAST, board.me())):
 							return tron.EAST 
-						else:
-							return random.choice(moves)
+						else: return random.choice(board.moves())
 
 				# lateral colision
 				elif board.rel (tron.WEST, board.them()) == value or board.rel (tron.EAST, board.them()) == value:
-					# print "eu"
-					return escape(board, tron.SOUTH)
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.SOUTH)
+					return random.choice(moves)
 
 				else :
 					return tron.SOUTH
 	
 		if (value[0] - board.me()[0]) == -1 and (value[1] - board.me()[1]) == 0:
 			if not board.passable(value):
-
 				return random.choice(board.moves())
 			else:
 				dest = board.rel(tron.SOUTH, board.them())
 				if dest == value:
-					if len(moves) > 1: moves.remove(tron.NORTH)
-
 					room1 = len(new_flood_fill(board, board.rel(tron.WEST, board.me()), board.rel(tron.NORTH, board.me())))
 					room2 = len(new_flood_fill(board, board.rel(tron.EAST, board.me()), board.rel(tron.NORTH, board.me())))
 					
 					if room1 > room2:
 						if board.passable( board.rel(tron.WEST, board.me())):
 							return tron.WEST
-						else:
-							return random.choice(moves)
+						else: return random.choice(board.moves())
 
 					else : 
 						if board.passable(board.rel(tron.EAST, board.me())):
 							return tron.EAST 
 						else: 
-							# print "eu"
-							# print len(moves)
-							return random.choice(moves)
+							return random.choice(board.moves())
 
 				# lateral colision
 				elif board.rel (tron.WEST, board.them()) == value or board.rel (tron.EAST, board.them()) == value:
-					return escape(board, tron.NORTH)
+					moves = board.moves()
+					if len(moves) > 1:
+						moves.remove(tron.NORTH)
+					return random.choice(moves)
+
 				else:
 					return tron.NORTH
 		# if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == 0:
@@ -249,5 +212,3 @@ def which_move(board):
 
 for board in tron.Board.generate():
     tron.move(which_move(board))
-
-

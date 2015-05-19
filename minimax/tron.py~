@@ -185,11 +185,11 @@ class Board(object):
 
     def tornaNaoPassavel(self, coords):
         if isinstance(coords, tuple):
-            self.board[coords[0]][coords[1]] = WALL
+            self[coords] = WALL
 
     def tornaPassavel(self, coords):
         if isinstance(coords, tuple):
-            self.board[coords[0]][coords[1]] = FLOOR
+            self[coords] = FLOOR
 
     def rel(self, direction, origin=None):
         """Calculate which tile is in the given direction from origin.

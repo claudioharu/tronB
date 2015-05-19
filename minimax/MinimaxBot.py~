@@ -11,7 +11,7 @@ import random
 stack = []
 
 
-MAX = 7
+MAX = 6
 NUM = 3**(MAX+1)
 def invalid (board, move, position):
     return not board.passable(board.rel(move, position))

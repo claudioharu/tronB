@@ -77,13 +77,3 @@ def minimax(board, my_position, e_position, profundidade):
 	return score_max, move_max
 
 
-
-def which_move(board):
-	tempo.inicializa()
-	lixo,r = minimax(board, board.me(), board.them(), 0)
-	return r
-
-
-# you do not need to modify this part
-for board in tron.Board.generate():
-    tron.move(which_move(board))

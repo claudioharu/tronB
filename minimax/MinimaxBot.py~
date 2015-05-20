@@ -11,7 +11,7 @@ import random
 stack = []
 
 
-MAX = 6
+MAX = 7
 NUM = 3**(MAX+1)
 def invalid (board, move, position):
     return not board.passable(board.rel(move, position))
@@ -32,8 +32,10 @@ def estimaRecurse(board, position, depth):
     acmul = 0
     for pos in board.adjacent(position):
         if board.passable(pos):
+            board.tornaNaoPassavel(pos)
             acmul+=1
             if depth != MAX: acmul += estimaRecurse(board, pos, depth+1)
+            board.tornaPassavel(pos)
     return acmul           
 
 def minimax(board, my_position, e_position, profundidade):

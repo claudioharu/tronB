@@ -1,3 +1,5 @@
+# MyTronBone
+
 from aEstrelaAbstrato import AEstrela, NodoGrafoAbstrato
 from itertools import product
 # from math import sqrt

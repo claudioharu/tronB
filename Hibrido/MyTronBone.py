@@ -8,7 +8,7 @@
 import tron
 
 import random
-from boardGraph import *
+from aEstrelaConcreto import *
 from minimaxLib import *
 
 
@@ -28,9 +28,12 @@ def which_move(board):
 	nodo, grafo = boardGraph({ "obstaculos": obstacles(board), "largura": board.width, "altura": board.height})
 	# print grafo
 	paths = None
-	paths = AStarGrid(grafo)
-	start, end = nodo[board.me()[0]][board.me()[1]], nodo[board.them()[0]][board.them()[1]]
-	path = paths.search(start, end)
+	paths = AEstrelaConcreto(grafo)
+
+	start = nodo[board.me()[0]][board.me()[1]]
+	goal = nodo[board.them()[0]][board.them()[1]]
+
+	path = paths.caminho(start, goal)
 
 	if path is None:
 		tempo.inicializa()

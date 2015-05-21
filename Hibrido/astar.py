@@ -37,6 +37,7 @@ class AStar(object):
         return None
  
 class AStarNode(object):
+    
     def __init__(self):
         self.g = 0
         self.h = 0

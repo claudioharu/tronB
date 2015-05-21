@@ -27,17 +27,18 @@ class AEstrela(object):
         
         atual = start
 
-        # conjunto de nohs que nao fazem parte da solucao
+        # conjunto de nohs que precisam ser investigados
         conjuntoAberto = set()
         conjuntoAberto.add(atual)
 
-        # conjunto de nohs visitados que fazem parte da solucao
+        # conjunto de nohs que nao precisam mais serem investigados
         conjuntoFechado = set()
         
         while conjuntoAberto:
             
             atual = min(conjuntoAberto, key = lambda o: o.g + o.h)
 
+            # o goal foi fechado, logo terminou
             if atual == goal:
                 
                 path = []

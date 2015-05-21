@@ -7,7 +7,6 @@
 
 import tron
 
-import random
 from aEstrelaConcreto import *
 from minimaxLib import *
 
@@ -35,6 +34,7 @@ def which_move(board):
 
 	path = paths.caminho(start, goal)
 
+	# Se nenhum caminho foi encontrado com o a-estrela utiliza-se o minimax
 	if path is None:
 		tempo.inicializa()
 		lixo, r = minimax(board, board.me(), board.them(), 0)
@@ -44,6 +44,7 @@ def which_move(board):
 		value = path[1].x, path[1].y
 		path.pop(0)
 
+		# Verifica a distancia, se for menor que 4 usa-se o minimax
 		if abs(board.me()[0] - board.them()[0]) + abs(board.me()[1] - board.them()[1]) > 4:
 		
 			if (value[0] - board.me()[0]) == 0 and (value[1] - board.me()[1]) == 1:

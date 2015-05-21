@@ -10,7 +10,7 @@ class NodoGrafoConcreto(NodoGrafoAbstrato):
         self.y = y
         super(NodoGrafoConcreto, self).__init__()
  
-    # att da fun custo
+    # atualizacao da funcao custo
     def custo(self, other):
         return 10
  
@@ -18,7 +18,7 @@ class AEstrelaConcreto(AEstrela):
 
     # Implementacao concreta
     # Heuristica utilizada pelo a*
-    def heur(self, nodo, start, goal):
+    def heur(self, nodo, goal):
         # Foi empregado a distancia manhattan
         return abs(goal.x - nodo.x) + abs(goal.y - nodo.y)
         # distancia euclidiana

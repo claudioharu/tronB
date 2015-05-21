@@ -16,11 +16,11 @@ class NodoGrafoAbstrato(object):
 
 class AEstrela(object):
 
-    def __init__(self, graph):
-        self.graph = graph
+    def __init__(self, grafo):
+        self.grafo = grafo
     
     # Heuristica abstrata 
-    def heur(self, nodo, start, goal):
+    def heur(self, nodo, goal):
         raise NotImplementedError
         
     def caminho(self, start, goal):
@@ -36,24 +36,25 @@ class AEstrela(object):
         
         while conjuntoAberto:
             
-            atual = min(conjuntoAberto, key = lambda o: o.g + o.h)
+            # Noh com menor custo no conjunto aberto
+            atual = min(conjuntoAberto, key = lambda aberto: aberto.g + aberto.h)
 
             # o goal foi fechado, logo terminou
             if atual == goal:
                 
-                path = []
+                caminho = []
 
                 while atual.pai:
-                    path.append(atual)
+                    caminho.append(atual)
                     atual = atual.pai
                 
-                path.append(atual)
-                return path[::-1]
+                caminho.append(atual)
+                return caminho[::-1]
 
             conjuntoFechado.add(atual)
             conjuntoAberto.remove(atual)
 
-            for nodo in self.graph[atual]:
+            for nodo in self.grafo[atual]:
 
                 # nada a ser feito
                 if nodo in conjuntoFechado:
@@ -61,7 +62,7 @@ class AEstrela(object):
                 
                 if nodo in conjuntoAberto:
 
-                    # att do valor do custo do noh
+                    # atualizacao do valor do custo do noh
                     gAtualizado = atual.g + atual.custo(nodo)
                     if nodo.g > gAtualizado:
                         nodo.pai = atual
@@ -69,10 +70,10 @@ class AEstrela(object):
                 else:
 
                     nodo.pai = atual
-                    # att do valor do custo do noh
+                    # atualizacao do valor do custo do noh
                     nodo.g = atual.g + atual.custo(nodo)
-                    # att do valor da heuristica
-                    nodo.h = self.heur(nodo, start, goal)
+                    # atualizacao do valor da heuristica
+                    nodo.h = self.heur(nodo, goal)
 
                     conjuntoAberto.add(nodo)
 

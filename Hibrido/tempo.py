@@ -1,6 +1,6 @@
 # Agente: MyTronBone
 # Integrantes: 
-# Cláudio Júnior 
+# Claudio Junior 
 # Diego Starling Fonseca
 # Gabriel Torres Uber Bucek
 

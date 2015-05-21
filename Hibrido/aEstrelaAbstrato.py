@@ -1,8 +1,9 @@
 # Agente: MyTronBone
 # Integrantes: 
-# Cláudio Júnior 
+# Claudio Junior 
 # Diego Starling Fonseca
 # Gabriel Torres Uber Bucek
+
 
 # Noh abstrato do grafo
 class NodoGrafoAbstrato(object):

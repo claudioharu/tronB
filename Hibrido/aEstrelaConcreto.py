@@ -1,4 +1,8 @@
-# MyTronBone
+# Agente: MyTronBone
+# Integrantes: 
+# Cláudio Júnior 
+# Diego Starling Fonseca
+# Gabriel Torres Uber Bucek
 
 from aEstrelaAbstrato import AEstrela, NodoGrafoAbstrato
 from itertools import product

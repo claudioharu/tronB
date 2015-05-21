@@ -1,7 +1,12 @@
 #!/usr/bin/python
 
 
-# MyTronBone
+# Agente: MyTronBone
+# Integrantes: 
+# Cláudio Júnior 
+# Diego Starling Fonseca
+# Gabriel Torres Uber Bucek
+
 
 # Copyright (C) 2010 Michael Spang. You may redistribute this file
 # under the terms of the FreeBSD license.
